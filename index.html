@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Summer Smart Play</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sage:       #3d6b52;
+    --sage-light: #eef4f0;
+    --sage-mid:   #c2d9cb;
+    --amber:      #d47c2f;
+    --amber-light:#fdf3e7;
+    --ink:        #1c2b22;
+    --ink-mid:    #4a5e52;
+    --ink-faint:  #8fa898;
+    --paper:      #faf9f6;
+    --white:      #ffffff;
+    --border:     #dce8e0;
+    --radius:     12px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  [data-theme="dark"] {
+    --sage:       #6ab98a;
+    --sage-light: #1a2e22;
+    --sage-mid:   #3a5c47;
+    --amber:      #e8954a;
+    --amber-light:#2a1e0e;
+    --ink:        #e8f0eb;
+    --ink-mid:    #a8bfb0;
+    --ink-faint:  #5a7a65;
+    --paper:      #111a14;
+    --white:      #1a2820;
+    --border:     #243320;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.6;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--sage);
+    color: var(--white);
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .header-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-mid);
+    margin-bottom: 0.6rem;
+  }
+  header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 300;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+  header h1 em {
+    font-style: italic;
+    color: #a8d4b8;
+  }
+  header p {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 480px;
+    line-height: 1.65;
+  }
+  .header-meta {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px;
+    padding: 0.3rem 0.85rem;
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+  }
+
+  /* ── FILTERS ── */
+  .filters-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .filters-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-right: 0.25rem;
+  }
+  .filter-btn {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 0.35rem 0.85rem;
+    border-radius: 100px;
+    border: 1.5px solid var(--border);
+    background: transparent;
+    color: var(--ink-mid);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .filter-btn:hover { border-color: var(--sage); color: var(--sage); }
+  .filter-btn.active {
+    background: var(--sage);
+    border-color: var(--sage);
+    color: var(--white);
+  }
+  .filter-divider {
+    width: 1px;
+    height: 20px;
+    background: var(--border);
+    margin: 0 0.25rem;
+  }
+  .results-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+
+  /* ── GRID ── */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    animation: fadeUp 0.3s ease both;
+  }
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(61,107,82,0.1);
+    transform: translateY(-2px);
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .card h2 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .age-badge {
+    flex-shrink: 0;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 0.2rem 0.55rem;
+    border-radius: 100px;
+    background: var(--sage-light);
+    color: var(--sage);
+    white-space: nowrap;
+  }
+  .card-desc {
+    font-size: 13.5px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .card-note {
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    padding-top: 0.65rem;
+    line-height: 1.5;
+  }
+  .card-footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    align-items: center;
+  }
+  .skill-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 0.18rem 0.55rem;
+    border-radius: 100px;
+    background: var(--sage-light);
+    color: var(--sage);
+    text-transform: lowercase;
+  }
+  .meta-tags {
+    margin-left: auto;
+    display: flex;
+    gap: 0.4rem;
+  }
+  .format-tag, .setting-tag {
+    font-size: 11px;
+    padding: 0.18rem 0.55rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--ink-faint);
+  }
+  .duration-tag {
+    font-size: 11px;
+    color: var(--ink-faint);
+    padding: 0.18rem 0;
+  }
+
+  /* ── NEIGHBORHOOD HIGHLIGHT ── */
+  .card.neighborhood {
+    border-color: var(--amber);
+    background: linear-gradient(135deg, var(--white) 0%, var(--amber-light) 100%);
+  }
+  .card.neighborhood .age-badge {
+    background: var(--amber-light);
+    color: var(--amber);
+  }
+  .card.neighborhood .skill-tag {
+    background: var(--amber-light);
+    color: var(--amber);
+  }
+  .neighborhood-flag {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .neighborhood-flag::before {
+    content: '★';
+    font-size: 10px;
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--ink-faint);
+  }
+  .empty p { font-size: 1rem; margin-top: 0.5rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--ink-faint);
+    font-size: 13px;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  footer a { color: var(--sage); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  /* ── DARK MODE TOGGLE ── */
+  .dark-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: var(--font-body);
+    color: var(--ink-faint);
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+  .dark-toggle:hover { color: var(--ink-mid); }
+  .toggle-track {
+    width: 36px;
+    height: 20px;
+    border-radius: 100px;
+    background: var(--border);
+    position: relative;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .toggle-track { background: var(--sage); }
+  .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--white);
+    transition: transform 0.2s ease, background 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(16px); background: #fff; }
+  .toggle-icon { font-size: 14px; line-height: 1; }
+
+  @media (max-width: 600px) {
+    header { padding: 2rem 1.25rem 1.75rem; }
+    .filters-bar { padding: 0.75rem 1.25rem; }
+    main { padding: 1.25rem; }
+    .grid { grid-template-columns: 1fr; }
+    .results-count { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <p class="header-eyebrow">Neighborhood activity library</p>
+    <h1>Summer <em>Smart</em> Play</h1>
+    <p>Low-effort, high-impact weekend activities for kids ages 3–10. No curriculum. No prep stress. Play that secretly builds real skills.</p>
+    <div class="header-meta">
+      <span class="meta-pill">20 activities</span>
+      <span class="meta-pill">Ages 3–10</span>
+      <span class="meta-pill">Under 60 min each</span>
+    </div>
+  </div>
+</header>
+
+<div class="filters-bar">
+  <div class="filters-inner">
+    <span class="filter-label">Age</span>
+    <button class="filter-btn active" data-filter="age" data-value="all">All</button>
+    <button class="filter-btn" data-filter="age" data-value="3">3–4</button>
+    <button class="filter-btn" data-filter="age" data-value="5">5–6</button>
+    <button class="filter-btn" data-filter="age" data-value="7">7+</button>
+    <div class="filter-divider"></div>
+    <span class="filter-label">Format</span>
+    <button class="filter-btn active" data-filter="format" data-value="all">All</button>
+    <button class="filter-btn" data-filter="format" data-value="neighborhood">Neighborhood</button>
+    <button class="filter-btn" data-filter="format" data-value="grouped">Grouped</button>
+    <button class="filter-btn" data-filter="format" data-value="solo">Solo</button>
+    <span class="results-count" id="results-count"></span>
+    <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">
+      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </button>
+  </div>
+</div>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <p>Activities grow every summer. Know a good one? <a href="mailto:">Suggest an activity.</a></p>
+</footer>
+
+<script>
+// ── DARK MODE ──
+const root = document.documentElement;
+const toggleBtn = document.getElementById('dark-toggle');
+const toggleIcon = document.getElementById('toggle-icon');
+
+function applyTheme(dark) {
+  root.setAttribute('data-theme', dark ? 'dark' : 'light');
+  toggleIcon.textContent = dark ? '🌙' : '☀️';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+
+// Init from saved preference or system preference
+const saved = localStorage.getItem('theme');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+applyTheme(saved ? saved === 'dark' : prefersDark);
+
+toggleBtn.addEventListener('click', () => {
+  applyTheme(root.getAttribute('data-theme') !== 'dark');
+});
+
+const CSV_URL = 'activities.csv';
+
+async function loadCSV(url) {
+  const res = await fetch(url);
+  const text = await res.text();
+  const lines = text.trim().split('\n');
+  const headers = parseCSVLine(lines[0]);
+  return lines.slice(1).filter(l => l.trim()).map(line => {
+    const vals = parseCSVLine(line);
+    return Object.fromEntries(headers.map((h, i) => [h.trim(), (vals[i] || '').trim()]));
+  });
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let cur = '', inQuote = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { inQuote = !inQuote; continue; }
+    if (ch === ',' && !inQuote) { result.push(cur); cur = ''; continue; }
+    cur += ch;
+  }
+  result.push(cur);
+  return result;
+}
+
+function formatLabel(str) {
+  return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function ageLabel(min, max) {
+  if (min == max) return `Age ${min}`;
+  return `Ages ${min}–${max}`;
+}
+
+function buildCard(a) {
+  const skills = a.skills.split(';').filter(Boolean);
+  const isNeighborhood = a.format === 'neighborhood';
+  const card = document.createElement('div');
+  card.className = 'card' + (isNeighborhood ? ' neighborhood' : '');
+  card.dataset.ageMin = a.age_min;
+  card.dataset.ageMax = a.age_max;
+  card.dataset.format = a.format;
+
+  card.innerHTML = `
+    <div class="card-top">
+      <h2>${a.title}</h2>
+      <span class="age-badge">${ageLabel(a.age_min, a.age_max)}</span>
+    </div>
+    ${isNeighborhood ? '<div class="neighborhood-flag">Whole neighborhood</div>' : ''}
+    <p class="card-desc">${a.description}</p>
+    ${a.notes ? `<p class="card-note">${a.notes}</p>` : ''}
+    <div class="card-footer">
+      ${skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+      <div class="meta-tags">
+        <span class="setting-tag">${a.setting}</span>
+        <span class="duration-tag">${a.duration_min} min</span>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+let allActivities = [];
+let activeAge = 'all';
+let activeFormat = 'all';
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  const filtered = allActivities.filter(a => {
+    const ageOk = activeAge === 'all' || (parseInt(a.age_min) <= parseInt(activeAge) + 1 && parseInt(a.age_max) >= parseInt(activeAge));
+    const fmtOk = activeFormat === 'all' || a.format === activeFormat || (activeFormat === 'solo' && a.format.includes('solo'));
+    return ageOk && fmtOk;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div class="empty"><strong>No activities found</strong><p>Try adjusting the filters above.</p></div>`;
+  } else {
+    filtered.forEach((a, i) => {
+      const card = buildCard(a);
+      card.style.animationDelay = `${i * 30}ms`;
+      grid.appendChild(card);
+    });
+  }
+
+  document.getElementById('results-count').textContent = `${filtered.length} of ${allActivities.length} activities`;
+
+  // update header meta count
+  document.querySelector('.meta-pill').textContent = `${allActivities.length} activities`;
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const group = btn.dataset.filter;
+    document.querySelectorAll(`.filter-btn[data-filter="${group}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (group === 'age') activeAge = btn.dataset.value;
+    if (group === 'format') activeFormat = btn.dataset.value;
+    renderGrid();
+  });
+});
+
+loadCSV(CSV_URL).then(data => {
+  allActivities = data;
+  renderGrid();
+}).catch(() => {
+  // fallback if CSV not found (e.g. viewing index.html directly without a server)
+  document.getElementById('grid').innerHTML = `
+    <div class="empty">
+      <strong>activities.csv not found</strong>
+      <p>Make sure <code>activities.csv</code> is in the same directory as this file.</p>
+    </div>`;
+});
+</script>
+</body>
+</html>
