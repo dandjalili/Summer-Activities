@@ -65,326 +65,240 @@
     background: radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
     pointer-events: none;
   }
-  .header-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    position: relative;
-  }
+  .header-inner { max-width: 860px; margin: 0 auto; position: relative; }
   .header-eyebrow {
-    font-family: var(--font-body);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--sage-mid);
-    margin-bottom: 0.6rem;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--sage-mid); margin-bottom: 0.6rem;
   }
   header h1 {
     font-family: var(--font-display);
     font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 300;
-    line-height: 1.15;
-    margin-bottom: 0.75rem;
+    font-weight: 300; line-height: 1.15; margin-bottom: 0.75rem;
   }
-  header h1 em {
-    font-style: italic;
-    color: #a8d4b8;
-  }
-  header p {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.75);
-    max-width: 480px;
-    line-height: 1.65;
-  }
-  .header-meta {
-    margin-top: 1.5rem;
-    display: flex;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-  }
+  header h1 em { font-style: italic; color: #a8d4b8; }
+  header p { font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 480px; line-height: 1.65; }
+  .header-meta { margin-top: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
   .meta-pill {
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 100px;
-    padding: 0.3rem 0.85rem;
-    font-size: 13px;
-    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 100px; padding: 0.3rem 0.85rem; font-size: 13px; color: rgba(255,255,255,0.85);
   }
 
-  /* ── FILTERS ── */
+  /* ── SEARCH ── */
+  .search-wrap { margin-top: 1.25rem; position: relative; max-width: 420px; }
+  .search-wrap svg {
+    position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+    color: rgba(255,255,255,0.5); pointer-events: none;
+  }
+  #search {
+    width: 100%; padding: 0.6rem 2.2rem 0.6rem 2.4rem;
+    border-radius: 100px; border: 1.5px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.12); color: var(--white);
+    font-family: var(--font-body); font-size: 14px; outline: none;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  #search::placeholder { color: rgba(255,255,255,0.45); }
+  #search:focus { border-color: rgba(255,255,255,0.5); background: rgba(255,255,255,0.18); }
+  .search-clear {
+    position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.55);
+    font-size: 18px; line-height: 1; padding: 2px 4px; display: none;
+  }
+  .search-clear.visible { display: block; }
+
+  /* ── FILTERS BAR ── */
   .filters-bar {
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 0.7rem 2rem; position: sticky; top: 0; z-index: 10;
+    transition: background 0.25s ease;
   }
   .filters-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-    align-items: center;
+    max-width: 860px; margin: 0 auto; display: flex;
+    gap: 0.5rem; flex-wrap: wrap; align-items: center;
   }
   .filter-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-right: 0.25rem;
+    font-size: 11px; font-weight: 500; color: var(--ink-faint);
+    text-transform: uppercase; letter-spacing: 0.08em;
   }
   .filter-btn {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 0.35rem 0.85rem;
-    border-radius: 100px;
-    border: 1.5px solid var(--border);
-    background: transparent;
-    color: var(--ink-mid);
-    cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
+    font-family: var(--font-body); font-size: 13px; font-weight: 500;
+    padding: 0.28rem 0.75rem; border-radius: 100px;
+    border: 1.5px solid var(--border); background: transparent;
+    color: var(--ink-mid); cursor: pointer; transition: all 0.15s ease; white-space: nowrap;
   }
   .filter-btn:hover { border-color: var(--sage); color: var(--sage); }
-  .filter-btn.active {
-    background: var(--sage);
-    border-color: var(--sage);
-    color: var(--white);
+  .filter-btn.active { background: var(--sage); border-color: var(--sage); color: #fff; }
+  .filter-btn.fav-btn { border-color: #dda0b0; color: #b05070; }
+  .filter-btn.fav-btn:hover { border-color: #c0546e; color: #c0546e; }
+  .filter-btn.fav-btn.active { background: #c0546e; border-color: #c0546e; color: #fff; }
+  .filter-divider { width: 1px; height: 18px; background: var(--border); margin: 0 0.1rem; }
+  .results-count { font-size: 12px; color: var(--ink-faint); white-space: nowrap; }
+
+  /* ── DARK TOGGLE ── */
+  .dark-toggle {
+    display: flex; align-items: center; gap: 0.4rem; margin-left: auto;
+    cursor: pointer; background: none; border: none; padding: 0;
+    color: var(--ink-faint); font-size: 13px; flex-shrink: 0;
   }
-  .filter-divider {
-    width: 1px;
-    height: 20px;
-    background: var(--border);
-    margin: 0 0.25rem;
+  .toggle-track {
+    width: 34px; height: 19px; border-radius: 100px; background: var(--border);
+    position: relative; transition: background 0.2s; flex-shrink: 0;
   }
-  .results-count {
-    margin-left: auto;
-    font-size: 13px;
-    color: var(--ink-faint);
+  [data-theme="dark"] .toggle-track { background: var(--sage); }
+  .toggle-thumb {
+    position: absolute; top: 2.5px; left: 2.5px; width: 14px; height: 14px;
+    border-radius: 50%; background: #fff; transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   }
+  [data-theme="dark"] .toggle-thumb { transform: translateX(15px); }
 
   /* ── GRID ── */
-  main {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.25rem;
-  }
+  main { max-width: 860px; margin: 0 auto; padding: 2rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
 
   /* ── CARD ── */
   .card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    background: var(--white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease, background 0.25s ease;
     animation: fadeUp 0.3s ease both;
   }
-  .card:hover {
-    box-shadow: 0 4px 20px rgba(61,107,82,0.1);
-    transform: translateY(-2px);
-  }
+  .card:hover { box-shadow: 0 4px 20px rgba(61,107,82,0.1); transform: translateY(-2px); }
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: translateY(0); }
   }
-  .card-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-  .card h2 {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 500;
-    line-height: 1.3;
-    color: var(--ink);
-  }
+  .card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+  .card-title-col { display: flex; flex-direction: column; gap: 0.25rem; flex: 1; min-width: 0; }
+  .card h2 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 500; line-height: 1.3; color: var(--ink); }
+  .card-top-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.35rem; flex-shrink: 0; }
   .age-badge {
-    flex-shrink: 0;
-    font-size: 11px;
-    font-weight: 500;
-    padding: 0.2rem 0.55rem;
-    border-radius: 100px;
-    background: var(--sage-light);
-    color: var(--sage);
-    white-space: nowrap;
+    font-size: 11px; font-weight: 500; padding: 0.2rem 0.55rem;
+    border-radius: 100px; background: var(--sage-light); color: var(--sage); white-space: nowrap;
   }
-  .card-desc {
-    font-size: 13.5px;
-    color: var(--ink-mid);
-    line-height: 1.6;
-    flex: 1;
+  .fav-heart {
+    background: none; border: none; cursor: pointer; font-size: 19px;
+    line-height: 1; padding: 0; color: var(--border);
+    transition: color 0.15s, transform 0.15s;
   }
+  .fav-heart:hover { color: #e07090; transform: scale(1.2); }
+  .fav-heart.active { color: #c0546e; }
+  .card-desc { font-size: 13.5px; color: var(--ink-mid); line-height: 1.6; flex: 1; }
   .card-note {
-    font-size: 12px;
-    color: var(--ink-faint);
-    font-style: italic;
-    border-top: 1px solid var(--border);
-    padding-top: 0.65rem;
-    line-height: 1.5;
+    font-size: 12px; color: var(--ink-faint); font-style: italic;
+    border-top: 1px solid var(--border); padding-top: 0.65rem; line-height: 1.5;
   }
-  .card-footer {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    align-items: center;
-  }
+  .card-footer { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
   .skill-tag {
-    font-size: 11px;
-    font-weight: 500;
-    padding: 0.18rem 0.55rem;
-    border-radius: 100px;
-    background: var(--sage-light);
-    color: var(--sage);
-    text-transform: lowercase;
+    font-size: 11px; font-weight: 500; padding: 0.18rem 0.55rem;
+    border-radius: 100px; background: var(--sage-light); color: var(--sage); text-transform: lowercase;
   }
-  .meta-tags {
-    margin-left: auto;
-    display: flex;
-    gap: 0.4rem;
+  .meta-tags { margin-left: auto; display: flex; gap: 0.4rem; align-items: center; }
+  .setting-tag {
+    font-size: 11px; padding: 0.18rem 0.55rem; border-radius: 100px;
+    border: 1px solid var(--border); color: var(--ink-faint);
   }
-  .format-tag, .setting-tag {
-    font-size: 11px;
-    padding: 0.18rem 0.55rem;
-    border-radius: 100px;
-    border: 1px solid var(--border);
-    color: var(--ink-faint);
-  }
-  .duration-tag {
-    font-size: 11px;
-    color: var(--ink-faint);
-    padding: 0.18rem 0;
-  }
+  .duration-tag { font-size: 11px; color: var(--ink-faint); }
+  mark.hl { background: rgba(212,124,47,0.25); border-radius: 2px; color: inherit; }
 
-  /* ── NEIGHBORHOOD HIGHLIGHT ── */
-  .card.neighborhood {
-    border-color: var(--amber);
-    background: linear-gradient(135deg, var(--white) 0%, var(--amber-light) 100%);
-  }
-  .card.neighborhood .age-badge {
-    background: var(--amber-light);
-    color: var(--amber);
-  }
-  .card.neighborhood .skill-tag {
-    background: var(--amber-light);
-    color: var(--amber);
-  }
+  /* ── NEIGHBORHOOD ── */
+  .card.neighborhood { border-color: var(--amber); background: linear-gradient(135deg, var(--white) 0%, var(--amber-light) 100%); }
+  .card.neighborhood .age-badge { background: var(--amber-light); color: var(--amber); }
+  .card.neighborhood .skill-tag { background: var(--amber-light); color: var(--amber); }
   .neighborhood-flag {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--amber);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
+    font-size: 11px; font-weight: 500; color: var(--amber);
+    text-transform: uppercase; letter-spacing: 0.08em; display: flex; align-items: center; gap: 0.3rem;
   }
-  .neighborhood-flag::before {
-    content: '★';
-    font-size: 10px;
-  }
+  .neighborhood-flag::before { content: '★'; font-size: 10px; }
 
-  /* ── EMPTY STATE ── */
-  .empty {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 4rem 2rem;
-    color: var(--ink-faint);
-  }
+  /* ── EMPTY ── */
+  .empty { grid-column: 1/-1; text-align: center; padding: 4rem 2rem; color: var(--ink-faint); }
   .empty p { font-size: 1rem; margin-top: 0.5rem; }
 
   /* ── FOOTER ── */
   footer {
-    text-align: center;
-    padding: 3rem 2rem;
-    color: var(--ink-faint);
-    font-size: 13px;
-    border-top: 1px solid var(--border);
-    margin-top: 2rem;
+    text-align: center; padding: 2.5rem 2rem; color: var(--ink-faint);
+    font-size: 13px; border-top: 1px solid var(--border); margin-top: 2rem;
   }
-  footer a { color: var(--sage); text-decoration: none; }
+  footer a { color: var(--sage); text-decoration: none; cursor: pointer; }
   footer a:hover { text-decoration: underline; }
 
-  /* ── DARK MODE TOGGLE ── */
-  .dark-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-left: auto;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    font-family: var(--font-body);
-    color: var(--ink-faint);
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    flex-shrink: 0;
+  /* ── MODAL ── */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45); z-index: 100;
+    align-items: center; justify-content: center;
+    padding: 1rem; backdrop-filter: blur(3px);
   }
-  .dark-toggle:hover { color: var(--ink-mid); }
-  .toggle-track {
-    width: 36px;
-    height: 20px;
-    border-radius: 100px;
-    background: var(--border);
-    position: relative;
-    transition: background 0.2s ease;
-    flex-shrink: 0;
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--paper); border-radius: 16px; padding: 2rem;
+    width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto;
+    position: relative; animation: modalIn 0.2s ease;
   }
-  [data-theme="dark"] .toggle-track { background: var(--sage); }
-  .toggle-thumb {
-    position: absolute;
-    top: 3px;
-    left: 3px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--white);
-    transition: transform 0.2s ease, background 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
   }
-  [data-theme="dark"] .toggle-thumb { transform: translateX(16px); background: #fff; }
-  .toggle-icon { font-size: 14px; line-height: 1; }
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem; background: none; border: none;
+    font-size: 22px; cursor: pointer; color: var(--ink-faint); line-height: 1; padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; margin-bottom: 0.4rem; }
+  .modal-sub { font-size: 13px; color: var(--ink-faint); margin-bottom: 1.5rem; line-height: 1.55; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 0.9rem; }
+  .field label { font-size: 11px; font-weight: 500; color: var(--ink-mid); text-transform: uppercase; letter-spacing: 0.06em; }
+  .field input, .field select, .field textarea {
+    font-family: var(--font-body); font-size: 14px; padding: 0.55rem 0.8rem;
+    border: 1.5px solid var(--border); border-radius: 8px;
+    background: var(--white); color: var(--ink); outline: none; transition: border-color 0.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--sage); }
+  .field textarea { resize: vertical; min-height: 80px; }
+  .field .hint { font-size: 11px; color: var(--ink-faint); line-height: 1.4; }
+  .submit-btn {
+    width: 100%; padding: 0.75rem; background: var(--sage); color: #fff;
+    border: none; border-radius: 100px; font-family: var(--font-body);
+    font-size: 14px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; margin-top: 0.5rem;
+  }
+  .submit-btn:hover { opacity: 0.88; }
 
   @media (max-width: 600px) {
-    header { padding: 2rem 1.25rem 1.75rem; }
-    .filters-bar { padding: 0.75rem 1.25rem; }
+    header { padding: 1.75rem 1.25rem; }
+    .filters-bar { padding: 0.6rem 1.25rem; }
     main { padding: 1.25rem; }
     .grid { grid-template-columns: 1fr; }
     .results-count { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+    .modal { padding: 1.5rem; }
   }
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="header-inner">
     <p class="header-eyebrow">Neighborhood activity library</p>
     <h1>Summer <em>Smart</em> Play</h1>
     <p>Low-effort, high-impact weekend activities for kids ages 3–10. No curriculum. No prep stress. Play that secretly builds real skills.</p>
     <div class="header-meta">
-      <span class="meta-pill">20 activities</span>
+      <span class="meta-pill" id="count-pill">20 activities</span>
       <span class="meta-pill">Ages 3–10</span>
       <span class="meta-pill">Under 60 min each</span>
+    </div>
+    <div class="search-wrap">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="search" id="search" placeholder="Search activities…" autocomplete="off" spellcheck="false">
+      <button class="search-clear" id="search-clear" aria-label="Clear search">×</button>
     </div>
   </div>
 </header>
 
+<!-- FILTERS -->
 <div class="filters-bar">
   <div class="filters-inner">
     <span class="filter-label">Age</span>
@@ -398,45 +312,125 @@
     <button class="filter-btn" data-filter="format" data-value="neighborhood">Neighborhood</button>
     <button class="filter-btn" data-filter="format" data-value="grouped">Grouped</button>
     <button class="filter-btn" data-filter="format" data-value="solo">Solo</button>
+    <div class="filter-divider"></div>
+    <button class="filter-btn fav-btn" id="fav-filter-btn">♥ Saved <span id="fav-count"></span></button>
     <span class="results-count" id="results-count"></span>
     <button class="dark-toggle" id="dark-toggle" aria-label="Toggle dark mode">
-      <span class="toggle-icon" id="toggle-icon">☀️</span>
+      <span id="toggle-icon">☀️</span>
       <div class="toggle-track"><div class="toggle-thumb"></div></div>
     </button>
   </div>
 </div>
 
+<!-- GRID -->
 <main>
   <div class="grid" id="grid"></div>
 </main>
 
+<!-- FOOTER -->
 <footer>
-  <p>Activities grow every summer. Know a good one? <a href="mailto:">Suggest an activity.</a></p>
+  <p>Activities grow every summer. Know a good one? <a id="suggest-link">Suggest an activity →</a></p>
 </footer>
 
+<!-- SUBMIT MODAL -->
+<div class="modal-backdrop" id="modal-backdrop">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+    <h2 id="modal-title">Suggest an activity</h2>
+    <p class="modal-sub">Fill in what you know and click Submit — it opens a pre-filled GitHub issue for review. We'll add approved suggestions to the library.</p>
+    <div class="field">
+      <label for="f-title">Activity title *</label>
+      <input type="text" id="f-title" placeholder="e.g. Sidewalk chalk obstacle course">
+    </div>
+    <div class="field">
+      <label for="f-desc">Description *</label>
+      <textarea id="f-desc" placeholder="What do you do? What makes it work well?"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label for="f-age-min">Min age *</label>
+        <select id="f-age-min">
+          <option value="">—</option>
+          <option>2</option><option>3</option><option>4</option><option>5</option>
+          <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-age-max">Max age *</label>
+        <select id="f-age-max">
+          <option value="">—</option>
+          <option>3</option><option>4</option><option>5</option><option>6</option>
+          <option>7</option><option>8</option><option>9</option><option>10</option><option>11</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label for="f-format">Format</label>
+        <select id="f-format">
+          <option value="">—</option>
+          <option value="solo">Solo</option>
+          <option value="solo-or-grouped">Solo or grouped</option>
+          <option value="grouped">Grouped</option>
+          <option value="neighborhood">Neighborhood (all ages)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="f-setting">Setting</label>
+        <select id="f-setting">
+          <option value="">—</option>
+          <option value="indoor">Indoor</option>
+          <option value="outdoor">Outdoor</option>
+          <option value="indoor-or-outdoor">Either</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label for="f-skills">Skills</label>
+        <input type="text" id="f-skills" placeholder="math, creativity, social…">
+        <span class="hint">math · language · science · spatial · logic · writing · creativity · social · physical</span>
+      </div>
+      <div class="field">
+        <label for="f-duration">Duration (min)</label>
+        <input type="number" id="f-duration" placeholder="e.g. 30" min="5" max="120">
+      </div>
+    </div>
+    <div class="field">
+      <label for="f-notes">Tips or notes</label>
+      <input type="text" id="f-notes" placeholder="Anything helpful for running this activity">
+    </div>
+    <button class="submit-btn" id="submit-btn">Open GitHub issue →</button>
+  </div>
+</div>
+
 <script>
+// ── CONFIG — update to your repo ──
+const GITHUB_REPO = 'YOUR-USERNAME/summer-smart-play';
+const CSV_URL = 'activities.csv';
+
 // ── DARK MODE ──
 const root = document.documentElement;
 const toggleBtn = document.getElementById('dark-toggle');
 const toggleIcon = document.getElementById('toggle-icon');
-
 function applyTheme(dark) {
   root.setAttribute('data-theme', dark ? 'dark' : 'light');
   toggleIcon.textContent = dark ? '🌙' : '☀️';
-  localStorage.setItem('theme', dark ? 'dark' : 'light');
+  localStorage.setItem('ssp-theme', dark ? 'dark' : 'light');
 }
+const savedTheme = localStorage.getItem('ssp-theme');
+applyTheme(savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches);
+toggleBtn.addEventListener('click', () => applyTheme(root.getAttribute('data-theme') !== 'dark'));
 
-// Init from saved preference or system preference
-const saved = localStorage.getItem('theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-applyTheme(saved ? saved === 'dark' : prefersDark);
+// ── FAVORITES ──
+let favorites = new Set(JSON.parse(localStorage.getItem('ssp-favs') || '[]'));
+function saveFavs() { localStorage.setItem('ssp-favs', JSON.stringify([...favorites])); }
+function updateFavCount() {
+  document.getElementById('fav-count').textContent = favorites.size > 0 ? `(${favorites.size})` : '';
+}
+updateFavCount();
 
-toggleBtn.addEventListener('click', () => {
-  applyTheme(root.getAttribute('data-theme') !== 'dark');
-});
-
-const CSV_URL = 'activities.csv';
-
+// ── CSV ──
 async function loadCSV(url) {
   const res = await fetch(url);
   const text = await res.text();
@@ -447,107 +441,184 @@ async function loadCSV(url) {
     return Object.fromEntries(headers.map((h, i) => [h.trim(), (vals[i] || '').trim()]));
   });
 }
-
 function parseCSVLine(line) {
-  const result = [];
-  let cur = '', inQuote = false;
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i];
-    if (ch === '"') { inQuote = !inQuote; continue; }
-    if (ch === ',' && !inQuote) { result.push(cur); cur = ''; continue; }
+  const out = []; let cur = '', inQ = false;
+  for (const ch of line) {
+    if (ch === '"') { inQ = !inQ; continue; }
+    if (ch === ',' && !inQ) { out.push(cur); cur = ''; continue; }
     cur += ch;
   }
-  result.push(cur);
-  return result;
+  out.push(cur);
+  return out;
+}
+function ageLabel(min, max) { return min == max ? `Age ${min}` : `Ages ${min}–${max}`; }
+function hl(text, q) {
+  if (!q) return text;
+  return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi'), '<mark class="hl">$1</mark>');
 }
 
-function formatLabel(str) {
-  return str.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-}
-
-function ageLabel(min, max) {
-  if (min == max) return `Age ${min}`;
-  return `Ages ${min}–${max}`;
-}
-
-function buildCard(a) {
+// ── BUILD CARD ──
+function buildCard(a, q) {
   const skills = a.skills.split(';').filter(Boolean);
-  const isNeighborhood = a.format === 'neighborhood';
+  const isN = a.format === 'neighborhood';
+  const isFav = favorites.has(a.id);
   const card = document.createElement('div');
-  card.className = 'card' + (isNeighborhood ? ' neighborhood' : '');
-  card.dataset.ageMin = a.age_min;
-  card.dataset.ageMax = a.age_max;
-  card.dataset.format = a.format;
+  card.className = 'card' + (isN ? ' neighborhood' : '');
 
   card.innerHTML = `
     <div class="card-top">
-      <h2>${a.title}</h2>
-      <span class="age-badge">${ageLabel(a.age_min, a.age_max)}</span>
+      <div class="card-title-col">
+        <h2>${hl(a.title, q)}</h2>
+        ${isN ? '<div class="neighborhood-flag">Whole neighborhood</div>' : ''}
+      </div>
+      <div class="card-top-right">
+        <span class="age-badge">${ageLabel(a.age_min, a.age_max)}</span>
+        <button class="fav-heart ${isFav ? 'active' : ''}" data-id="${a.id}" title="${isFav ? 'Remove from saved' : 'Save'}">${isFav ? '♥' : '♡'}</button>
+      </div>
     </div>
-    ${isNeighborhood ? '<div class="neighborhood-flag">Whole neighborhood</div>' : ''}
-    <p class="card-desc">${a.description}</p>
-    ${a.notes ? `<p class="card-note">${a.notes}</p>` : ''}
+    <p class="card-desc">${hl(a.description, q)}</p>
+    ${a.notes ? `<p class="card-note">${hl(a.notes, q)}</p>` : ''}
     <div class="card-footer">
       ${skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
       <div class="meta-tags">
         <span class="setting-tag">${a.setting}</span>
         <span class="duration-tag">${a.duration_min} min</span>
       </div>
-    </div>
-  `;
+    </div>`;
+
+  card.querySelector('.fav-heart').addEventListener('click', e => {
+    const id = e.currentTarget.dataset.id;
+    const on = favorites.has(id);
+    on ? favorites.delete(id) : favorites.add(id);
+    e.currentTarget.classList.toggle('active', !on);
+    e.currentTarget.textContent = on ? '♡' : '♥';
+    saveFavs(); updateFavCount();
+    if (showFavsOnly) renderGrid();
+  });
   return card;
 }
 
-let allActivities = [];
-let activeAge = 'all';
-let activeFormat = 'all';
+// ── RENDER ──
+let allActivities = [], activeAge = 'all', activeFormat = 'all', showFavsOnly = false, searchQuery = '';
 
 function renderGrid() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
+  const q = searchQuery.toLowerCase().trim();
 
   const filtered = allActivities.filter(a => {
     const ageOk = activeAge === 'all' || (parseInt(a.age_min) <= parseInt(activeAge) + 1 && parseInt(a.age_max) >= parseInt(activeAge));
     const fmtOk = activeFormat === 'all' || a.format === activeFormat || (activeFormat === 'solo' && a.format.includes('solo'));
-    return ageOk && fmtOk;
+    const favOk = !showFavsOnly || favorites.has(a.id);
+    const srchOk = !q || [a.title, a.description, a.skills, a.notes].join(' ').toLowerCase().includes(q);
+    return ageOk && fmtOk && favOk && srchOk;
   });
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<div class="empty"><strong>No activities found</strong><p>Try adjusting the filters above.</p></div>`;
+    const msg = (showFavsOnly && favorites.size === 0)
+      ? '<strong>No saved activities yet</strong><p>Click ♡ on any card to save it here.</p>'
+      : '<strong>No activities found</strong><p>Try adjusting your filters or search.</p>';
+    grid.innerHTML = `<div class="empty">${msg}</div>`;
   } else {
     filtered.forEach((a, i) => {
-      const card = buildCard(a);
-      card.style.animationDelay = `${i * 30}ms`;
-      grid.appendChild(card);
+      const c = buildCard(a, q);
+      c.style.animationDelay = `${i * 25}ms`;
+      grid.appendChild(c);
     });
   }
 
-  document.getElementById('results-count').textContent = `${filtered.length} of ${allActivities.length} activities`;
-
-  // update header meta count
-  document.querySelector('.meta-pill').textContent = `${allActivities.length} activities`;
+  const label = filtered.length < allActivities.length
+    ? `${filtered.length} of ${allActivities.length}` : `${allActivities.length} activities`;
+  document.getElementById('results-count').textContent = label;
+  document.getElementById('count-pill').textContent = `${allActivities.length} activities`;
 }
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+// ── FILTER BUTTONS ──
+document.querySelectorAll('.filter-btn[data-filter="age"], .filter-btn[data-filter="format"]').forEach(btn => {
   btn.addEventListener('click', () => {
-    const group = btn.dataset.filter;
-    document.querySelectorAll(`.filter-btn[data-filter="${group}"]`).forEach(b => b.classList.remove('active'));
+    const g = btn.dataset.filter;
+    document.querySelectorAll(`.filter-btn[data-filter="${g}"]`).forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    if (group === 'age') activeAge = btn.dataset.value;
-    if (group === 'format') activeFormat = btn.dataset.value;
+    if (g === 'age') activeAge = btn.dataset.value;
+    if (g === 'format') activeFormat = btn.dataset.value;
     renderGrid();
   });
 });
 
+document.getElementById('fav-filter-btn').addEventListener('click', e => {
+  showFavsOnly = !showFavsOnly;
+  e.currentTarget.classList.toggle('active', showFavsOnly);
+  renderGrid();
+});
+
+// ── SEARCH ──
+const searchInput = document.getElementById('search');
+const searchClear = document.getElementById('search-clear');
+searchInput.addEventListener('input', () => {
+  searchQuery = searchInput.value;
+  searchClear.classList.toggle('visible', searchQuery.length > 0);
+  renderGrid();
+});
+searchClear.addEventListener('click', () => {
+  searchInput.value = ''; searchQuery = '';
+  searchClear.classList.remove('visible');
+  searchInput.focus(); renderGrid();
+});
+
+// ── MODAL ──
+const backdrop = document.getElementById('modal-backdrop');
+document.getElementById('suggest-link').addEventListener('click', () => backdrop.classList.add('open'));
+document.getElementById('modal-close').addEventListener('click', () => backdrop.classList.remove('open'));
+backdrop.addEventListener('click', e => { if (e.target === backdrop) backdrop.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') backdrop.classList.remove('open'); });
+
+document.getElementById('submit-btn').addEventListener('click', () => {
+  const title = document.getElementById('f-title').value.trim();
+  const desc  = document.getElementById('f-desc').value.trim();
+  const ageMin = document.getElementById('f-age-min').value;
+  const ageMax = document.getElementById('f-age-max').value;
+  if (!title || !desc || !ageMin || !ageMax) {
+    alert('Please fill in the required fields: title, description, and age range.'); return;
+  }
+  const format   = document.getElementById('f-format').value;
+  const setting  = document.getElementById('f-setting').value;
+  const skills   = document.getElementById('f-skills').value.trim();
+  const duration = document.getElementById('f-duration').value;
+  const notes    = document.getElementById('f-notes').value.trim();
+
+  const body = [
+    `## New Activity Suggestion`,
+    ``,
+    `**Title:** ${title}`,
+    `**Description:** ${desc}`,
+    `**Age range:** ${ageMin}–${ageMax}`,
+    format   ? `**Format:** ${format}`    : null,
+    setting  ? `**Setting:** ${setting}`  : null,
+    skills   ? `**Skills:** ${skills}`    : null,
+    duration ? `**Duration:** ${duration} min` : null,
+    notes    ? `**Notes:** ${notes}`      : null,
+    ``,
+    `---`,
+    `*Submitted via Summer Smart Play website*`
+  ].filter(l => l !== null).join('\n');
+
+  const url = `https://github.com/${GITHUB_REPO}/issues/new`
+    + `?title=${encodeURIComponent('Activity suggestion: ' + title)}`
+    + `&body=${encodeURIComponent(body)}`
+    + `&labels=activity-suggestion`;
+  window.open(url, '_blank');
+  backdrop.classList.remove('open');
+});
+
+// ── INIT ──
 loadCSV(CSV_URL).then(data => {
   allActivities = data;
   renderGrid();
 }).catch(() => {
-  // fallback if CSV not found (e.g. viewing index.html directly without a server)
   document.getElementById('grid').innerHTML = `
     <div class="empty">
       <strong>activities.csv not found</strong>
-      <p>Make sure <code>activities.csv</code> is in the same directory as this file.</p>
+      <p>Make sure <code>activities.csv</code> is in the same folder as this file.</p>
     </div>`;
 });
 </script>
